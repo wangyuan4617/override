@@ -1,20 +1,5 @@
-# Clash 覆写规则文件
-# 直接覆盖整个规则
-rules:
-  - DOMAIN,vitejs.dev.com,DIRECT
-  - DOMAIN,edge.microsoft.com,DIRECT
-  - DOMAIN,npmjs.com,DIRECT
-  - DOMAIN,baidu.com,DIRECT
-
-# 将规则插入到原规则前面（使用 + 前缀）
+# 将规则插入到原规则前面
 +rules:
-  - DOMAIN,vitejs.dev.com,DIRECT
-  - DOMAIN,edge.microsoft.com,DIRECT
-  - DOMAIN,npmjs.com,DIRECT
-  - DOMAIN,baidu.com,DIRECT
-
-# 在原规则后面追加规则（使用 + 后缀）
-rules+:
   - DOMAIN,vitejs.dev.com,DIRECT
   - DOMAIN,edge.microsoft.com,DIRECT
   - DOMAIN,npmjs.com,DIRECT

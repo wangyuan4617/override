@@ -30,26 +30,9 @@ function generateJS(domains) {
 // 生成 YAML 覆写文件
 function generateYAML(domains) {
   const lines = [
-    '# Clash 覆写规则文件',
-    '# 直接覆盖整个规则',
-    'rules:',
+    '# 将规则插入到原规则前面',
+    '+rules:',
   ];
-  
-  domains.forEach(domain => {
-    lines.push(`  - DOMAIN,${domain},DIRECT`);
-  });
-  
-  lines.push('');
-  lines.push('# 将规则插入到原规则前面（使用 + 前缀）');
-  lines.push('+rules:');
-  
-  domains.forEach(domain => {
-    lines.push(`  - DOMAIN,${domain},DIRECT`);
-  });
-  
-  lines.push('');
-  lines.push('# 在原规则后面追加规则（使用 + 后缀）');
-  lines.push('rules+:');
   
   domains.forEach(domain => {
     lines.push(`  - DOMAIN,${domain},DIRECT`);
