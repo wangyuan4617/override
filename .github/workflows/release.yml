@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'direct_urls.txt'
+      - 'config.json'
 
 permissions:
   contents: write

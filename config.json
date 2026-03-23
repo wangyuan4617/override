@@ -1,0 +1,10 @@
+{
+  "ruleType": "DOMAIN-SUFFIX",
+  "policy": "DIRECT",
+  "domains": [
+    "vitejs.dev",
+    "microsoft.com",
+    "npmjs.com",
+    "baidu.com"
+  ]
+}

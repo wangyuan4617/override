@@ -1,6 +1,6 @@
 # 将规则插入到原规则前面
 +rules:
-  - DOMAIN,vitejs.dev.com,DIRECT
-  - DOMAIN,edge.microsoft.com,DIRECT
-  - DOMAIN,npmjs.com,DIRECT
-  - DOMAIN,baidu.com,DIRECT
+  - DOMAIN-SUFFIX,vitejs.dev,DIRECT
+  - DOMAIN-SUFFIX,microsoft.com,DIRECT
+  - DOMAIN-SUFFIX,npmjs.com,DIRECT
+  - DOMAIN-SUFFIX,baidu.com,DIRECT

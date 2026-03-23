@@ -1,8 +1,8 @@
 // https://mihomo.party/docs/guide/override/javascript
 function main(config) {
-  config.rules.unshift("DOMAIN,vitejs.dev.com,DIRECT");
-  config.rules.unshift("DOMAIN,edge.microsoft.com,DIRECT");
-  config.rules.unshift("DOMAIN,npmjs.com,DIRECT");
-  config.rules.unshift("DOMAIN,baidu.com,DIRECT");
+  config.rules.unshift("DOMAIN-SUFFIX,vitejs.dev,DIRECT");
+  config.rules.unshift("DOMAIN-SUFFIX,microsoft.com,DIRECT");
+  config.rules.unshift("DOMAIN-SUFFIX,npmjs.com,DIRECT");
+  config.rules.unshift("DOMAIN-SUFFIX,baidu.com,DIRECT");
   return config
 }

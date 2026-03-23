@@ -2,36 +2,58 @@
 
 用于管理 Clash/Mihomo 直连域名列表，自动生成 JavaScript 和 YAML 格式的覆写文件，并通过 GitHub Actions 自动发布。
 
-## 使用方法
+## 快速开始
 
-### 本地生成
+### 1. 编辑配置文件
+
+编辑 `config.json` 文件：
+
+```json
+{
+  "ruleType": "DOMAIN-SUFFIX",
+  "policy": "DIRECT",
+  "domains": [
+    "vitejs.dev",
+    "microsoft.com",
+    "npmjs.com",
+    "baidu.com"
+  ]
+}
+```
+
+### 2. 生成覆写文件
 
 ```bash
-# 安装依赖（可选，本项目无外部依赖）
-npm install
-
-# 生成覆写文件
-npm run generate
-# 或
 node generate.js
 ```
 
-### 添加直连域名
+### 3. 推送到 GitHub
 
-编辑 `direct_urls.txt` 文件，每行一个域名：
-
-```text
-# 这是注释
-vitejs.dev.com
-edge.microsoft.com
-npmjs.com
+```bash
+git add config.json
+git commit -m "更新直连域名列表"
+git push
 ```
 
-### 自动发布
+GitHub Actions 会自动生成 Release。
 
-推送 `direct_urls.txt` 的更改到 `main` 分支后，GitHub Actions 会自动：
-1. 生成最新的 `override.js` 和 `override.yaml`
-2. 创建新的 Release 并附上生成的文件
+## 配置说明
+
+### config.json
+
+| 字段 | 说明 | 默认值 | 示例 |
+|------|------|--------|------|
+| `ruleType` | 规则类型 | `DOMAIN-SUFFIX` | `DOMAIN`, `DOMAIN-SUFFIX`, `DOMAIN-KEYWORD` |
+| `policy` | 策略名称 | `DIRECT` | `DIRECT`, `PROXY`, `REJECT` |
+| `domains` | 域名列表 | 必填 | `["google.com", "github.com"]` |
+
+### 规则类型说明
+
+| 规则类型 | 说明 | 示例 |
+|---------|------|------|
+| `DOMAIN` | 精确匹配完整域名 | `DOMAIN,www.google.com` |
+| `DOMAIN-SUFFIX` | 匹配域名后缀（推荐） | `DOMAIN-SUFFIX,google.com` 匹配 `www.google.com`、`mail.google.com` |
+| `DOMAIN-KEYWORD` | 域名包含关键词 | `DOMAIN-KEYWORD,google` |
 
 ## 输出文件
 
@@ -40,8 +62,8 @@ npmjs.com
 ```javascript
 // https://mihomo.party/docs/guide/override/javascript
 function main(config) {
-  config.rules.unshift("DOMAIN,vitejs.dev.com,DIRECT");
-  config.rules.unshift("DOMAIN,edge.microsoft.com,DIRECT");
+  config.rules.unshift("DOMAIN-SUFFIX,vitejs.dev,DIRECT");
+  config.rules.unshift("DOMAIN-SUFFIX,microsoft.com,DIRECT");
   return config
 }
 ```
@@ -49,22 +71,17 @@ function main(config) {
 ### override.yaml
 
 ```yaml
-# 直接覆盖整个规则
-rules:
-  - DOMAIN,baidu.com,DIRECT
 # 将规则插入到原规则前面
 +rules:
-  - DOMAIN,baidu.com,DIRECT
-# 在原规则后面追加规则
-rules+:
-  - DOMAIN,baidu.com,DIRECT
+  - DOMAIN-SUFFIX,vitejs.dev,DIRECT
+  - DOMAIN-SUFFIX,microsoft.com,DIRECT
 ```
 
 ## 文件说明
 
 | 文件 | 说明 |
 |------|------|
-| `direct_urls.txt` | 直连域名列表（手动编辑） |
+| `config.json` | 配置文件（手动编辑） |
 | `generate.js` | 生成脚本 |
 | `override.js` | 生成的 JavaScript 覆写文件 |
 | `override.yaml` | 生成的 YAML 覆写文件 |
