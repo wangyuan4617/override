@@ -27,23 +27,27 @@ jobs:
       - name: Generate override files
         run: node generate.js
 
-      - name: Get current date
-        id: date
-        run: echo "date=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
+      - name: Delete existing latest tag and release
+        continue-on-error: true
+        run: |
+          git fetch --tags
+          if git show-ref --tags | grep -q refs/tags/latest; then
+            git tag -d latest
+            git push origin :refs/tags/latest
+          fi
 
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ steps.date.outputs.date }}
-          name: Release ${{ steps.date.outputs.date }}
+          tag_name: latest
+          name: Latest Release
           body: |
-            自动生成的 Clash 覆写文件
+            自动生成的 Clash 覆写文件（最新版）
             
-            ## 变更
-            - 更新直连域名列表
-            - 生成最新的 override.js 和 override.yaml
+            > 每次推送后自动更新
           files: |
             override.js
             override.yaml
           draft: false
           prerelease: false
+          make_latest: true
