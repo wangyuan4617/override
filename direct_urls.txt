@@ -1,6 +1,0 @@
-# 直连域名列表
-# 每行一个域名，以 # 开头的行为注释
-vitejs.dev.com
-edge.microsoft.com
-npmjs.com
-baidu.com
