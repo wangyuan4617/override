@@ -6,18 +6,24 @@
 
 ### 1. 编辑配置文件
 
-编辑 `config.json` 文件：
+编辑 `config.json` 文件，在对应的规则类型数组中添加域名：
 
 ```json
 {
-  "ruleType": "DOMAIN-SUFFIX",
   "policy": "DIRECT",
-  "domains": [
-    "vitejs.dev",
-    "microsoft.com",
-    "npmjs.com",
-    "baidu.com"
-  ]
+  "rules": {
+    "DOMAIN": [],
+    "DOMAIN-SUFFIX": [
+      "vitejs.dev",
+      "microsoft.com",
+      "npmjs.com",
+      "baidu.com"
+    ],
+    "DOMAIN-KEYWORD": [],
+    "IP-CIDR": [],
+    "GEOIP": [],
+    "PROCESS-NAME": []
+  }
 }
 ```
 
@@ -41,19 +47,56 @@ GitHub Actions 会自动生成 Release。
 
 ### config.json
 
-| 字段 | 说明 | 默认值 | 示例 |
-|------|------|--------|------|
-| `ruleType` | 规则类型 | `DOMAIN-SUFFIX` | `DOMAIN`, `DOMAIN-SUFFIX`, `DOMAIN-KEYWORD` |
-| `policy` | 策略名称 | `DIRECT` | `DIRECT`, `PROXY`, `REJECT` |
-| `domains` | 域名列表 | 必填 | `["google.com", "github.com"]` |
+| 字段 | 说明 | 默认值 |
+|------|------|--------|
+| `policy` | 默认策略名称 | `DIRECT` |
+| `rules` | 规则对象，包含各种规则类型的数组 | 必填 |
 
 ### 规则类型说明
 
 | 规则类型 | 说明 | 示例 |
 |---------|------|------|
-| `DOMAIN` | 精确匹配完整域名 | `DOMAIN,www.google.com` |
-| `DOMAIN-SUFFIX` | 匹配域名后缀（推荐） | `DOMAIN-SUFFIX,google.com` 匹配 `www.google.com`、`mail.google.com` |
-| `DOMAIN-KEYWORD` | 域名包含关键词 | `DOMAIN-KEYWORD,google` |
+| `DOMAIN` | 精确匹配完整域名 | `www.google.com` |
+| `DOMAIN-SUFFIX` | 匹配域名后缀（推荐） | `google.com` 匹配 `www.google.com`、`mail.google.com` |
+| `DOMAIN-KEYWORD` | 域名包含关键词 | `google` |
+| `IP-CIDR` | IP 段 | `8.8.8.0/24` |
+| `GEOIP` | GeoIP 国家代码 | `CN`、`US` |
+| `PROCESS-NAME` | 进程名 | `chrome`、`WeChat` |
+
+### 示例配置
+
+```json
+{
+  "policy": "DIRECT",
+  "rules": {
+    "DOMAIN": [
+      "www.baidu.com"
+    ],
+    "DOMAIN-SUFFIX": [
+      "vitejs.dev",
+      "microsoft.com",
+      "npmjs.com",
+      "baidu.com"
+    ],
+    "DOMAIN-KEYWORD": [
+      "google",
+      "github"
+    ],
+    "IP-CIDR": [
+      "8.8.8.0/24",
+      "1.1.1.1/32"
+    ],
+    "GEOIP": [
+      "CN",
+      "LAN"
+    ],
+    "PROCESS-NAME": [
+      "WeChat",
+      "qq.exe"
+    ]
+  }
+}
+```
 
 ## 输出文件
 

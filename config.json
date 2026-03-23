@@ -1,10 +1,21 @@
 {
-  "ruleType": "DOMAIN-SUFFIX",
   "policy": "DIRECT",
-  "domains": [
-    "vitejs.dev",
-    "microsoft.com",
-    "npmjs.com",
-    "baidu.com"
-  ]
+  "rules": {
+    "DOMAIN": [
+    ],
+    "DOMAIN-SUFFIX": [
+      "vitejs.dev",
+      "microsoft.com",
+      "npmjs.com",
+      "baidu.com"
+    ],
+    "DOMAIN-KEYWORD": [
+    ],
+    "IP-CIDR": [
+    ],
+    "GEOIP": [
+    ],
+    "PROCESS-NAME": [
+    ]
+  }
 }
