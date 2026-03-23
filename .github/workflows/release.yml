@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'direct_urls.txt'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate override files
+        run: node generate.js
+
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.date.outputs.date }}
+          name: Release ${{ steps.date.outputs.date }}
+          body: |
+            自动生成的 Clash 覆写文件
+            
+            ## 变更
+            - 更新直连域名列表
+            - 生成最新的 override.js 和 override.yaml
+          files: |
+            override.js
+            override.yaml
+          draft: false
+          prerelease: false

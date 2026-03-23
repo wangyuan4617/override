@@ -1,0 +1,18 @@
+{
+  "name": "clash-override",
+  "version": "1.0.0",
+  "description": "Clash 覆写文件生成器 - 管理直连域名并生成 JS/YAML 覆写规则",
+  "main": "generate.js",
+  "scripts": {
+    "generate": "node generate.js",
+    "build": "node generate.js"
+  },
+  "keywords": [
+    "clash",
+    "mihomo",
+    "override",
+    "rules"
+  ],
+  "author": "",
+  "license": "MIT"
+}
