@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - 'config.json'
+  watch:
+    types: [started]
 
 permissions:
   contents: write
