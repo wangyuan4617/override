@@ -50,4 +50,3 @@ jobs:
             override.yaml
           draft: false
           prerelease: false
-          make_latest: true
